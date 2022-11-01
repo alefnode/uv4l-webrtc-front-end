@@ -1,5 +1,5 @@
 # uv4l-webrtc-front-end
-# Edited code to work With chrome without any special flag
+## Edited code to work With chrome without any special flag
 
 UV4L Webrtc Front-End Source Code
 
