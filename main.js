@@ -23,7 +23,14 @@ function addGyronormScript() {
 }
 
 var signalling_server_hostname = location.hostname || "192.168.1.8";
-var signalling_server_address = signalling_server_hostname + ':' + (location.port || (location.protocol === 'https:' ? 443 : 80));
+
+// Use Port 9000 as described in documentation
+// Line below is original line
+//   var signalling_server_address = signalling_server_hostname + ':' + (location.port || (location.protocol === 'https:' ? 443 : 80));
+// Edited Port
+var signalling_server_address = signalling_server_hostname + ':' + (9000 || (location.protocol === 'https:' ? 443 : 80));
+// End edit
+
 var isFirefox = typeof InstallTrigger !== 'undefined';// Firefox 1.0+
 
 addEventListener("DOMContentLoaded", function () {
@@ -270,7 +277,9 @@ function start() {
             var localVideoElement = document.getElementById('local-video');
             if (localConstraints.audio || localConstraints.video) {
                 if (navigator.getUserMedia) {
-                    navigator.getUserMedia(localConstraints, function (stream) {
+                    const options = {audio: true, video: true};
+                    navigator.mediaDevices.getDisplayMedia(options)
+                    .then(function(stream) {
                         audio_video_stream = stream;
                         call(stream);
                         localVideoElement.muted = true;
